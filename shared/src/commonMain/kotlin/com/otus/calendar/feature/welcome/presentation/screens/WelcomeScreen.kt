@@ -1,4 +1,4 @@
-package com.otus.calendar
+package com.otus.calendar.feature.welcome.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,17 +12,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun App() {
-    MaterialTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier.fillMaxSize().safeDrawingPadding(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Text("Otus Calendar", style = MaterialTheme.typography.h4)
-                Text("Your JMAP calendar app")
-            }
+fun WelcomeScreen() {
+    Surface(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize().safeDrawingPadding(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text("Otus Calendar", style = MaterialTheme.typography.h4)
+            Text("Your JMAP calendar app")
         }
     }
 }
