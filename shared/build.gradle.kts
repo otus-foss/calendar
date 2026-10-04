@@ -8,6 +8,7 @@ plugins {
 }
 
 kotlin {
+    compilerOptions { allWarningsAsErrors.set(true) }
     listOf(iosArm64(), iosSimulatorArm64()).forEach { target ->
         target.binaries.framework {
             baseName = "Shared"
@@ -16,10 +17,17 @@ kotlin {
     }
     android {
         namespace = "com.otus.calendar.shared"
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
-        minSdk = libs.versions.android.minSdk.get().toInt()
+        compileSdk =
+            libs.versions.android.compileSdk
+                .get()
+                .toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
         compilerOptions { jvmTarget = JvmTarget.JVM_11 }
         androidResources { enable = true }
+        withHostTest {}
     }
     sourceSets {
         commonMain.dependencies {
@@ -27,6 +35,7 @@ kotlin {
             implementation(libs.compose.foundation)
             implementation(libs.compose.material)
             implementation(libs.compose.ui)
+            implementation(libs.kotlinx.datetime)
         }
         commonTest.dependencies { implementation(kotlin("test")) }
     }
