@@ -6,8 +6,14 @@ android-compileSdk = "37"
 android-targetSdk = "37"
 android-minSdk = "24"
 androidx-activity = "1.13.0"
+kotlinx-datetime = "0.7.1"
+robolectric = "4.17"
+junit = "4.13.2"
 
 [libraries]
+junit = { module = "junit:junit", version.ref = "junit" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose-multiplatform" }
