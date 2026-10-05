@@ -46,3 +46,6 @@ and the reusable API for future settings and screens.
 Read [AGENTS.md](AGENTS.md), [architecture](docs/architecture.md), and
 [quality checks](docs/quality.md). UI follows elements → components → screens. Install the tools in the quality guide and
 run `./gradlew checkAll` before submitting changes. Use `./gradlew formatAll` to format.
+
+See [sender and attendee avatars](docs/avatars.md) for the reusable contact-photo, optional domain-icon,
+and generated-avatar service.
