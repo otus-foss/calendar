@@ -35,8 +35,17 @@ kotlin {
             implementation(libs.compose.foundation)
             implementation(libs.compose.material)
             implementation(libs.compose.ui)
+            implementation(libs.compose.resources)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.ktor.client.core)
+            implementation(libs.kotlinx.coroutines.core)
         }
-        commonTest.dependencies { implementation(kotlin("test")) }
+        androidMain.dependencies { implementation(libs.ktor.client.okhttp) }
+        iosMain.dependencies { implementation(libs.ktor.client.darwin) }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.ktor.client.mock)
+            implementation(libs.kotlinx.coroutines.test)
+        }
     }
 }
