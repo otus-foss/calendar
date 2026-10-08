@@ -78,7 +78,7 @@ rules, including function and type length, remain enabled.
 No lint baselines, blanket warning allowances, or failure-tolerant checks. The narrowly scoped
 file-length exception above is permitted. CI evaluates every pull request and push to main.
 Repository administrators must require the `portable`, `android`, and `ios` checks on main and
-disallow bypasses for merge enforcement; adding workflow files alone does not enable GitHub branch
+disallow bypasses for merge enforcement; adding workflow files alone does not enable branch
 protection. Local Git hooks are not a security boundary and are not relied upon.
 
 Detekt runs without full application type resolution. Architecture checks inspect source references,
@@ -118,3 +118,9 @@ enable the hook with the command above. See [the decision](decisions/0004-commit
 - [detekt](https://detekt.dev/docs/1.23.8/introduction/configurations/)
 - [SwiftFormat](https://github.com/nicklockwood/SwiftFormat)
 - [SwiftLint](https://github.com/realm/SwiftLint)
+
+## Forgejo cutover
+
+Forgejo workflows live in `.forgejo/workflows`; GitHub workflows remain in `.github/workflows`.
+Both retain the required checks. Forgejo runners and repository settings still need verification.
+See [hosting and CI](hosting.md).
