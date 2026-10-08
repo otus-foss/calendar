@@ -1,5 +1,9 @@
 # Otus Calendar
 
+Development, pull requests, and new issues use
+[otus-calendar on Forgejo](https://git.hilfikers.com/florian.ruby/otus-calendar).
+GitHub is a secondary copy. See [hosting and CI](docs/hosting.md) for the cutover status.
+
 Kotlin Multiplatform + Compose app for Android and iOS, intended as the calendar client in the Otus
 JMAP suite. This initial scaffold includes a welcome screen; JMAP discovery, authentication,
 synchronization and product features are not implemented yet.
