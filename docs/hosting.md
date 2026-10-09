@@ -19,9 +19,13 @@ Push accepted commits explicitly to GitHub when needed for GitHub CI. Keep the s
 and respect branch protection on both hosts.
 
 Forgejo workflows live in `.forgejo/workflows`; the working GitHub workflows remain in
-`.github/workflows`. Forgejo requires registered runners labelled `otus-linux` and
+`.github/workflows`. Forgejo requires registered runners labelled `ubuntu-latest` and
 `otus-macos`. The required checks remain `portable`, `android`, and `ios`; none has been
 verified on Forgejo during the Git cutover. Calendar does not consume Meta packages yet.
+
+The Linux label follows the instance maintainer's `runs-on: ubuntu-latest` guidance.
+The `ios` job still requires a separate `otus-macos` runner with Xcode 26.3. A Linux
+runner cannot build the Xcode app; a queued iOS job needs its own runner.
 
 Runners, secrets, Actions enablement, branch protection, and automatic mirroring require
 authenticated server access and remain unverified. The
