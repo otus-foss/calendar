@@ -119,8 +119,7 @@ enable the hook with the command above. See [the decision](decisions/0004-commit
 - [SwiftFormat](https://github.com/nicklockwood/SwiftFormat)
 - [SwiftLint](https://github.com/realm/SwiftLint)
 
-## Forgejo cutover
+## Runners
 
-Forgejo workflows live in `.forgejo/workflows`; GitHub workflows remain in `.github/workflows`.
-Both retain the required checks. Forgejo runners and repository settings still need verification.
-See [hosting and CI](hosting.md).
+Linux jobs run on Ubicloud's `ubicloud-standard-2` runners. The `ios` job is paused with
+`if: false`. See [hosting and CI](hosting.md).
