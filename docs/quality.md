@@ -12,6 +12,9 @@ python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements-quality.txt
 ```
 
+To build against an unreleased otus-meta checkout, including in the pre-push hook, set
+`GRADLE_OPTS=-Dorg.gradle.project.otus.meta.path=../otus-meta`.
+
 Daily commands:
 
 ```sh
@@ -26,7 +29,7 @@ Gradle automatically uses the repository's Python virtual environment when prese
 | --- | --- |
 | `formatAll` | Spotless/ktlint Kotlin and Gradle formatting, project text whitespace, Ruff fixes/formatting |
 | `qualityCheck` | Spotless, detekt, architecture/file-length checks and regression tests, Ruff lint/format |
-| `checkAll` | Everything in qualityCheck, Android lint/debug assembly, shared host tests, and Android locale/storage tests |
+| `checkAll` | Everything in qualityCheck, Android lint/debug assembly, and shared and Android unit tests |
 
 Project text formatting covers Markdown, YAML, JSON, XML/plist, and TOML with trailing-whitespace
 removal and a final newline. It does not enforce full syntax-specific formatting or Markdown

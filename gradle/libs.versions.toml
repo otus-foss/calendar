@@ -1,4 +1,5 @@
 [versions]
+otus-meta = "0.7.0"
 agp = "9.1.1"
 kotlin = "2.4.10"
 compose-multiplatform = "1.11.1"
@@ -14,11 +15,13 @@ ktor = "3.6.0"
 kotlinx-coroutines = "1.11.0"
 
 [libraries]
-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+otus-avatar = { module = "com.otus:avatar", version.ref = "otus-meta" }
+otus-dateformat = { module = "com.otus:dateformat", version.ref = "otus-meta" }
+otus-designsystem = { module = "com.otus:designsystem", version.ref = "otus-meta" }
+otus-settings = { module = "com.otus:settings", version.ref = "otus-meta" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }

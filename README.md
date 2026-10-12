@@ -23,6 +23,9 @@ Use JDK 21 and Android Studio with the Kotlin Multiplatform plugin. Install Andr
 `ANDROID_HOME` or add `sdk.dir=/your/android/sdk` to untracked `local.properties`. Open this
 directory in Android Studio and run `androidApp`.
 
+The build downloads shared Otus libraries from GitHub Packages, which needs a GitHub token. See
+[Shared libraries](docs/shared-libraries.md) for the one-time setup.
+
 ```sh
 ./gradlew :androidApp:assembleDebug
 ```
@@ -43,15 +46,17 @@ Sample museum code and unrelated platform targets were removed.
 
 ## Engineering policy
 
-See [date formatting](docs/date-formatting.md) for device-locale defaults, saved format choices,
-and the reusable API for future settings and screens.
+See [shared libraries](docs/shared-libraries.md) for the otus-meta libraries Calendar uses: the
+design system, date formatting, avatars, and the settings pages and state. See
+[date formatting](docs/date-formatting.md) for how Calendar wires saved format choices into future
+settings and screens.
 
 Read [AGENTS.md](AGENTS.md), [architecture](docs/architecture.md), and
 [quality checks](docs/quality.md). UI follows elements → components → screens. Install the tools in the quality guide and
 run `./gradlew checkAll` before submitting changes. Use `./gradlew formatAll` to format.
 
-See [sender and attendee avatars](docs/avatars.md) for the reusable contact-photo, optional domain-icon,
-and generated-avatar service.
+See [attendee avatars](docs/avatars.md) for how Calendar uses Meta's avatar service and the Public
+Suffix List it bundles.
 
 ## Commit messages
 

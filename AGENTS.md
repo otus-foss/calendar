@@ -2,8 +2,8 @@
 
 ## Hosting
 
-GitHub hosts development, pull requests, issues, and CI. Use `origin` for GitHub. See
-[hosting and CI](docs/hosting.md).
+GitHub hosts development, pull requests, issues, CI, and released packages. Use `origin` for
+GitHub. See [hosting and CI](docs/hosting.md).
 
 ## Required reading and commands
 
@@ -21,8 +21,11 @@ readiness. Preserve portable Kotlin boundaries and the iOS target; iOS remains a
 
 All UI follows **elements → components → screens**.
 
-- `designsystem/elements`: small branded primitives, such as buttons, fields, and avatars.
-- `designsystem/components`: reusable compositions without feature knowledge.
+- Elements (small branded primitives, such as buttons, fields, and avatars), components
+  (reusable compositions without feature knowledge), and tokens come from otus-meta's
+  `com.otus.designsystem`; Calendar has no local `designsystem` package. Add new elements,
+  reusable components, visual tokens, and symbol resources there, even if only Calendar currently
+  uses them. Calendar keeps feature adapters and screens. See decision 0008 in Meta.
 - `feature/<name>/presentation/components`: feature-specific compositions.
 - `feature/<name>/presentation/screens`: complete views, named `*Screen.kt`.
 - `app`: root composition, dependency wiring, and navigation only.
@@ -52,6 +55,15 @@ palette through `OtusColors` and `OtusTheme`; default text is `text1` (`#EBECED`
 `text2`/`text3` require an explicit semantic choice. Do not add a light-mode branch, dynamic device
 colors, or a theme switch.
 
+## Motion
+
+Animate only through Meta's design system. Calendar pins Meta 0.7.0, which provides
+`MotionTokens` and animated elements such as `AnimatedText`; Calendar has no animation code of its
+own. Never add a raw duration constant, a `tween` with a literal, a new `CubicBezierEasing`, or an
+animation with a Compose default spec. Meta's `main` replaces `MotionTokens` with `Motion`
+(`motionTween(speed, curve)` and `LocalMotionScale`); adopt it when Calendar pins a release that
+includes it. See [motion](docs/motion.md).
+
 ## Opinionated conventions
 
 Use the committed formatters, never personal formatting preferences. No wildcard imports. Use
@@ -69,9 +81,9 @@ chain. Change immutable values with `copy`. Keep a loop or a local `var` when ea
 or cycle tracking would make a chain harder to follow. Do not add Java-style setters that return
 `this`, chain side effects through `let` or `also`, or change a public API only for style.
 
-Keep colors in `designsystem/theme` and refer to named tokens. Feature UI belongs with its feature
-until there is concrete reuse. Create folders with real code rather than placeholder files. Keep
-handwritten Kotlin files at most 300 lines and Swift files at most 200 lines, including tests,
+Keep colors and all visual tokens in Meta's `designsystem/theme` and refer to named tokens.
+Feature UI belongs with its feature; reusable rendering belongs in Meta. Create folders with real
+code rather than placeholder files. Keep handwritten Kotlin files at most 300 lines and Swift files at most 200 lines, including tests,
 comments, and blank lines. Aim for 100–200 lines for typical UI files. Split by responsibility
 first. The only permitted file-size exception is a first-line
 `// otus-file-length: 420 -- <concrete reason>` directive; see `docs/quality.md` for validation
@@ -147,6 +159,7 @@ not add tests that merely repeat constants or implementation details. Update arc
 boundaries change.
 
 Each app is a separate Git repository. Never assume a sibling checkout or parent docs are available
-in CI. Shared-library distribution is undecided. Do not create a third repository or publish
-libraries without a concrete task. Check JMAP specifications and advertised server capabilities
-before implementing protocol behavior.
+in CI. Code shared with Mail lives in otus-meta and arrives here as a pinned release; see
+`docs/shared-libraries.md`. Change shared code there, release it, then update the pinned version
+here. Check JMAP specifications and advertised server capabilities before implementing protocol
+behavior.
