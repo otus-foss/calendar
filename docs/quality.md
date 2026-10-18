@@ -23,7 +23,8 @@ Daily commands:
 ```
 
 Run formatting first, then checks. Formatting cannot fix every static-analysis violation.
-Gradle automatically uses the repository's Python virtual environment when present.
+Gradle uses the repository's Python virtual environment when present. A linked worktree without
+one uses the main checkout's `.venv`.
 
 | Command | Scope |
 | --- | --- |
@@ -36,6 +37,9 @@ removal and a final newline. It does not enforce full syntax-specific formatting
 structure. See decision 0002 for the deliberate removal of the JavaScript tooling stack.
 Generated Gradle wrappers, Xcode project files, caches, and build output are excluded.
 
+Test code gets ktlint formatting only. Android lint (`ignoreTestSources`) and detekt skip test
+source sets, because analyzing them took about a third of lint's time and found little.
+
 Swift formatting/lint and iOS compilation require the separate macOS workflow below; they are
 not included in `formatAll` or `checkAll`.
 
@@ -47,9 +51,10 @@ mint run swiftformat --lint iosApp
 mint run swiftlint lint --strict
 ```
 
-**CI is paused.** The `quality` workflow runs only when started by hand from GitHub Actions, so
-pull requests get no CI results. The local hooks remain the gate. The workflow file says how to
-resume.
+**CI runs once per pull request,** on Ubicloud runners. The `quality` workflow starts when a pull
+request that is not a draft opens, or when a draft is marked ready for review. Later pushes do not
+start it again, so open pull requests as drafts and mark them ready once every commit is pushed.
+Start it by hand from GitHub Actions to check again.
 
 The CI `quality` workflow runs on pull requests that change more than Markdown. Its `check` job runs
 `checkAll`, and its `ios` job runs Swift formatting/lint plus a simulator build. The simulator build verifies compilation without device
@@ -89,7 +94,8 @@ before every push that sends commits, including pushes to `main` and tags. Both 
 working tree, so stash unrelated changes first. `git push --no-verify` skips the hooks; do not
 use it to get past a failing check.
 
-CI runs `checkAll` only on pull requests that change more than Markdown, to save runner minutes.
+CI runs `checkAll` once per ready pull request that changes more than Markdown, to save runner
+minutes.
 The repositories are private on a GitHub plan that cannot require checks, so CI reports results
 but cannot block a merge. See [suite decision 0013](https://github.com/reazndev/otus-meta/blob/main/docs/decisions/0013-local-quality-gate.md).
 
