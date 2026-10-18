@@ -11,10 +11,6 @@ shared/src/
   commonMain/kotlin/<package>/
     app/                            App.kt, wiring, navigation
     core/                           Protocol/storage/platform contracts and infrastructure
-    designsystem/
-      theme/                        Named design tokens and theme
-      elements/                     Small branded UI primitives
-      components/                   Feature-independent compositions
     feature/<feature>/
       domain/                       Models, contracts, business behavior
       data/                         Repository implementations, local/remote adapters
@@ -40,9 +36,11 @@ Design-system elements/components and feature components are driven by values an
 ViewModels and navigation are connected at screen entry points. Networking, persistence, and
 synchronization do not belong inside UI components.
 
-Shared package names do not share code across Git repositories. Cross-app library ownership and
-distribution remain undecided. Accounts, contacts, and settings are expected feature areas; Mail and
-Calendar add their own domain features as implemented.
+Code shared with Mail lives in otus-meta and arrives as pinned libraries; see
+[shared libraries](shared-libraries.md). Code moves there when both apps need it, and new visual
+elements, components, tokens, and symbols start there even when only Calendar uses them. Other
+shared package names do not share code across Git repositories. Accounts, contacts, and settings are
+expected feature areas; Mail and Calendar add their own domain features as implemented.
 
 The architecture checker enforces paths, package alignment, UI locations, import/reference
 boundaries, and selected forbidden APIs. It is a source-level guard, not a Kotlin type resolver:
@@ -55,8 +53,15 @@ defined.
 
 ## Avatar service
 
-The portable account-scoped avatar resolver and its injected contact/image contracts live in
-`core/avatar`. App wiring supplies sources; presentation resolves photos before passing bitmap or
-initial values to design-system elements. Mail resolves senders progressively after inbox loading.
-Calendar exposes the same service for future attendees. See [avatars](avatars.md) for the contract,
-cache limits, privacy options, repository-copy ownership, and deferred work.
+The portable account-scoped avatar resolver comes from the `com.otus:avatar` library. App wiring
+supplies sources; presentation resolves photos before passing bitmap or initial values to
+design-system elements. Calendar does not wire it yet because attendee screens are not
+implemented. See [avatars](avatars.md) for what Calendar supplies.
+
+## Shared libraries
+
+The design system (`com.otus.designsystem`), date formatting (`com.otus.dateformat`), avatars
+(`com.otus.avatar`), and the settings pages and state (`com.otus.settings`) come from otus-meta;
+see [shared libraries](shared-libraries.md). All visual elements, components, tokens, and symbols
+live in Meta. A new element or reusable component belongs in Meta even when Calendar is its only
+current consumer. The checker rejects local production design-system code.

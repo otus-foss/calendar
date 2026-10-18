@@ -9,6 +9,11 @@ on:
 permissions:
   contents: read
 
+# The shared Otus libraries download from otus-meta's GitHub Packages registry.
+env:
+  ORG_GRADLE_PROJECT_otusMetaUsername: ${{ github.repository_owner }}
+  ORG_GRADLE_PROJECT_otusMetaPassword: ${{ secrets.OTUS_META_PACKAGES_TOKEN }}
+
 concurrency:
   group: quality-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
