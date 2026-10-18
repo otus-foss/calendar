@@ -2,8 +2,8 @@
 
 Both apps use the supplied Otus palette in dark mode only. System light/dark settings do not change
 the app theme. `OtusColors` holds named tokens and `OtusTheme` supplies Material colors and default
-content styling. Ordinary text inherits `text1` (`#EBECED`) at full opacity; muted text requires an
-explicit `text2` or `text3` choice.
+content styling; both come from Meta's `com.otus:designsystem` library. Ordinary text inherits
+`text1` (`#EBECED`) at full opacity; muted text requires an explicit `text2` or `text3` choice.
 
 | Token         | Hex     |
 | ------------- | ------- |

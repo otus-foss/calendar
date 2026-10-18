@@ -11,6 +11,7 @@ SKIP = {"build", ".gradle", ".git", ".venv"}
 LAYERS = {"app", "core", "designsystem", "feature"}
 PLATFORM_APIS = ("android.", "java.", "javax.", "platform.")
 DATA_APIS = ("io.ktor.", "app.cash.sqldelight.", "androidx.room.", "okhttp3.")
+DRAWABLE = re.compile(r"drawable(?:-[\w-]+)?")
 
 
 def source_code(text: str) -> str:
@@ -22,7 +23,7 @@ def source_code(text: str) -> str:
     )
 
 
-def violations(path: Path, text: str, base: str) -> list[str]:
+def violations(path: Path, text: str, base: str, *, central_ui: bool = False) -> list[str]:
     errors = file_length_violations(path, text)
     code = source_code(text)
     parts = path.parts
@@ -63,6 +64,8 @@ def violations(path: Path, text: str, base: str) -> list[str]:
         len(location) < 2 or location[1] not in {"elements", "components", "theme"}
     ):
         errors.append("designsystem code belongs in elements/components/theme")
+    if central_ui and location[:1] == ["designsystem"]:
+        errors.append("visual elements, components, and tokens belong in otus-meta")
     # Includes fully qualified code references as well as imported types.
     references = re.findall(r"\b" + re.escape(base) + r"\.([A-Za-z_][\w.]*)", code)
     current_package = suffix
@@ -117,9 +120,21 @@ def violations(path: Path, text: str, base: str) -> list[str]:
             errors.append(
                 "composables belong in app/designsystem/presentation screens or components"
             )
-    if "theme" not in location and re.search(r"\bColor\s*\(\s*0[xX]", code):
-        errors.append("literal colors belong in designsystem/theme")
+    if re.search(r"\bColor\s*\(\s*0[xX]", code):
+        errors.append("literal colors belong in otus-meta designsystem/theme")
     return sorted(set(errors))
+
+
+def drawable_violations(root: Path) -> list[str]:
+    """Drawable resources in any source set of the shared or Android module belong in otus-meta."""
+    return [
+        f"{path.relative_to(root)}: visual drawable resources belong in otus-meta/designsystem"
+        for folder in ("shared/src", "androidApp/src")
+        for path in sorted((root / folder).rglob("*"))
+        if path.is_file()
+        and not set(path.relative_to(root).parts) & SKIP
+        and DRAWABLE.fullmatch(path.parent.name)
+    ]
 
 
 def main() -> int:
@@ -128,13 +143,15 @@ def main() -> int:
     if not app:
         print("Cannot determine Otus application namespace", file=sys.stderr)
         return 1
-    failures = []
+    failures = drawable_violations(ROOT)
     for folder in ("shared/src", "androidApp/src", "iosApp"):
         for path in sorted((ROOT / folder).rglob("*")):
             if path.suffix not in {".kt", ".swift"} or set(path.parts) & SKIP:
                 continue
             relative = path.relative_to(ROOT)
-            for error in violations(relative, path.read_text(), f"com.otus.{app.group(1)}"):
+            for error in violations(
+                relative, path.read_text(), f"com.otus.{app.group(1)}", central_ui=True
+            ):
                 failures.append(f"{relative}: {error}")
     if failures:
         print("\n".join(failures), file=sys.stderr)

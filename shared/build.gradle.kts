@@ -36,10 +36,12 @@ kotlin {
             implementation(libs.compose.material)
             implementation(libs.compose.ui)
             implementation(libs.compose.resources)
-            implementation(libs.kotlinx.datetime)
-            implementation(libs.ktor.client.core)
-            implementation(libs.kotlinx.coroutines.core)
+            api(libs.otus.avatar)
+            api(libs.otus.dateformat)
+            api(libs.otus.designsystem)
+            api(libs.otus.settings)
         }
+        // Platform engines for the credential-free HttpAvatarImageLoader in com.otus:avatar.
         androidMain.dependencies { implementation(libs.ktor.client.okhttp) }
         iosMain.dependencies { implementation(libs.ktor.client.darwin) }
         commonTest.dependencies {
