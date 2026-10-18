@@ -23,7 +23,8 @@ Daily commands:
 ```
 
 Run formatting first, then checks. Formatting cannot fix every static-analysis violation.
-Gradle automatically uses the repository's Python virtual environment when present.
+Gradle uses the repository's Python virtual environment when present. A linked worktree without
+one uses the main checkout's `.venv`.
 
 | Command | Scope |
 | --- | --- |
@@ -35,6 +36,9 @@ Project text formatting covers Markdown, YAML, JSON, XML/plist, and TOML with tr
 removal and a final newline. It does not enforce full syntax-specific formatting or Markdown
 structure. See decision 0002 for the deliberate removal of the JavaScript tooling stack.
 Generated Gradle wrappers, Xcode project files, caches, and build output are excluded.
+
+Test code gets ktlint formatting only. Android lint (`ignoreTestSources`) and detekt skip test
+source sets, because analyzing them took about a third of lint's time and found little.
 
 Swift formatting/lint and iOS compilation require the separate macOS workflow below; they are
 not included in `formatAll` or `checkAll`.
