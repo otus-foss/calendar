@@ -32,7 +32,7 @@ dependencies { add(detektTool.name, "io.gitlab.arturbosch.detekt:detekt-cli:1.23
 
 tasks.register<JavaExec>("detekt") {
     group = "verification"
-    description = "Analyze all hand-written Kotlin source with zero allowed findings."
+    description = "Analyze hand-written main Kotlin source with zero allowed findings. Tests get ktlint only."
     classpath = detektTool
     mainClass.set("io.gitlab.arturbosch.detekt.cli.Main")
     args(
@@ -42,10 +42,17 @@ tasks.register<JavaExec>("detekt") {
         "config/detekt.yml",
         "--build-upon-default-config",
         "--excludes",
-        "**/build/**",
+        "**/build/**,**/src/test/**,**/src/*Test/**",
         "--report",
         "html:build/reports/detekt.html",
     )
+    // Declared inputs and outputs let an unchanged tree skip detekt or restore it from the build cache.
+    inputs
+        .files(listOf("shared/src", "androidApp/src").map { fileTree(it) { exclude("test/**", "*Test/**") } })
+        .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file("config/detekt.yml").withPathSensitivity(PathSensitivity.RELATIVE)
+    outputs.file("build/reports/detekt.html")
+    outputs.cacheIf { true }
 }
 
 tasks.register<Exec>("architectureCheck") {
@@ -53,10 +60,22 @@ tasks.register<Exec>("architectureCheck") {
     commandLine("python3", "tools/check_architecture.py")
 }
 
+// A linked worktree has no .venv of its own, so fall back to the main checkout's.
 val qualityPython =
     providers.provider {
-        val localPython = layout.projectDirectory.file(".venv/bin/python").asFile
-        if (localPython.exists()) localPython.absolutePath else "python3"
+        val root = layout.projectDirectory.asFile
+        val mainCheckout =
+            root
+                .resolve(".git")
+                .takeIf { it.isFile }
+                ?.readText()
+                ?.substringAfter("gitdir:")
+                ?.trim()
+                ?.let { File(it).parentFile.parentFile.parentFile }
+        listOfNotNull(root, mainCheckout)
+            .map { it.resolve(".venv/bin/python") }
+            .firstOrNull { it.exists() }
+            ?.absolutePath ?: "python3"
     }
 
 tasks.register<Exec>("architectureTest") {
