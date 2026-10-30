@@ -110,16 +110,21 @@ tasks.register("formatAll") {
     dependsOn("spotlessApply", "ruffFormat")
 }
 
-tasks.register("checkAll") {
+// CI runs qualityCheck and checkAndroid as parallel jobs.
+tasks.register("checkAndroid") {
     group = "verification"
-    description = "Run portable quality checks, Android lint, and debug compilation."
     dependsOn(
-        "qualityCheck",
         ":androidApp:lintDebug",
         ":androidApp:assembleDebug",
         ":androidApp:testDebugUnitTest",
         ":shared:testAndroidHostTest",
     )
+}
+
+tasks.register("checkAll") {
+    group = "verification"
+    description = "Run portable quality checks, Android lint, and debug compilation."
+    dependsOn("qualityCheck", "checkAndroid")
 }
 
 tasks.register("qualityCheck") {
