@@ -57,7 +57,7 @@ start it again, so open pull requests as drafts and mark them ready once every c
 Start it by hand from GitHub Actions to check again.
 
 The CI `quality` workflow runs on pull requests that change more than Markdown. Its `check` job runs
-`checkAll`, and its `ios` job runs Swift formatting/lint plus a simulator build. The simulator build verifies compilation without device
+`checkAll` as two parallel jobs, `qualityCheck` and `checkAndroid`, and its `ios` job runs Swift formatting/lint plus a simulator build. The simulator build verifies compilation without device
 signing; runtime simulator tests are added with actual behavior tests.
 
 ## File-length limits and exceptions
