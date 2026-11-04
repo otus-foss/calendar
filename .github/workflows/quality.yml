@@ -107,6 +107,8 @@ jobs:
       - run: mint bootstrap
       - run: mint run swiftformat --lint iosApp
       - run: mint run swiftlint lint --strict
+      # Xcode's Kotlin build phase downloads Gradle with a 10 second timeout, so fetch it first.
+      - run: ./gradlew --version
       - name: Compile iOS simulator app
         # Only this step downloads the shared Otus libraries, so no other step sees the token.
         env:
