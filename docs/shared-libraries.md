@@ -48,8 +48,8 @@ SSH Git credentials do not authenticate Maven downloads.
 Meta's tag workflow published 0.7.0 with every module's Android, iOS device, and iOS simulator
 variants to GitHub Packages. Tag publishing has since been paused on Meta's `main`; see
 [otus-meta's releasing guide](https://github.com/reazndev/otus-meta/blob/main/docs/releasing.md).
-Versions 0.3.1 to 0.5.0 are not on GitHub Packages. iOS linking against the artifacts is
-unverified while the macOS `ios` job is paused. See [hosting and CI](hosting.md).
+Versions 0.3.1 to 0.5.0 are not on GitHub Packages. The macOS `ios` job links the app against
+the pinned artifacts. See [hosting and CI](hosting.md).
 
 ## Changing shared code
 
