@@ -143,5 +143,5 @@ enable the hook with the command above. See [the decision](decisions/0004-commit
 
 ## Runners
 
-Linux jobs run on Ubicloud's `ubicloud-standard-2` runners. The `ios` job is paused with
-`if: false`. See [hosting and CI](hosting.md).
+Linux jobs run on Ubicloud's `ubicloud-standard-2` runners. The `ios` job runs on GitHub's
+`macos-15` runners, because Ubicloud has no macOS runners. See [hosting and CI](hosting.md).
