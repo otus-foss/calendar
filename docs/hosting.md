@@ -12,8 +12,8 @@ git config --local core.hooksPath .githooks
 ```
 
 `.github/workflows` holds every workflow. Linux jobs run on Ubicloud's `ubicloud-standard-2`
-runners. The `ios` job is paused with `if: false`; delete that condition to run it again. The
-job needs macOS 15 with Xcode 26.3.
+runners. The `ios` job runs on GitHub's `macos-15` runners with Xcode 26.3, because Ubicloud has
+no macOS runners. Like the Linux jobs, it runs once per pull request that is ready for review.
 
 Calendar downloads its pinned Meta release from GitHub Packages at
 `https://maven.pkg.github.com/reazndev/otus-meta`. CI reads a GitHub token with `read:packages`
