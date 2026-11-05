@@ -1,21 +1,13 @@
 # Motion
 
-Calendar has no animation code of its own. Motion comes from Meta's `com.otus:designsystem`
-library, which Calendar pins at 0.7.0; see [shared libraries](shared-libraries.md). The welcome
-screen does not animate.
-
-In 0.7.0, `theme/MotionTokens` holds the suite's `standard`, `enter`, and `exit` curves and the
-text replacement durations. `elements/AnimatedText` replaces a label with a clipped vertical slide
-and fade: increasing order slides upward, decreasing order slides downward, and unchanged text
-stays still. Compose's motion duration scale applies. Future Calendar screens can use
-`AnimatedText` from the pinned release.
-
-Meta's `main` replaces `MotionTokens` with the `Motion` API: `MotionSpeed`, `MotionCurve`,
-`motionTween(speed, curve)`, and the global speed multiplier `LocalMotionScale`. Its
+Calendar has no animation code of its own yet, and the welcome screen does not animate. Every
+animation takes its duration and curve from Meta's `Motion` API: `MotionSpeed`, `MotionCurve`,
+`motionTween(speed, curve)`, and the global speed multiplier `LocalMotionScale`. Meta's
 [design system guide](https://github.com/reazndev/otus-meta/blob/main/docs/designsystem.md#motion)
-explains the speeds and curves. Calendar adopts that API when it pins a Meta release that includes
-it. Until then, Calendar adds no raw duration constant, `tween` with a literal, new
-`CubicBezierEasing`, or animation with a Compose default spec; reusable animation belongs in Meta.
+explains the curves, the speeds, how durations are computed, and how to call it. The rules for
+choosing a speed and a curve are in [AGENTS.md](../AGENTS.md#motion).
 
-Mail's `AnimatedTextTest` covers the shared element's directions, interruption, and unchanged
-text. Physical-device motion review and iOS runtime validation remain open.
+Meta's `tools/check_architecture.py` rejects `tween(`, `spring(`, and `CubicBezierEasing(` in
+Calendar's production Kotlin, and `animateScrollToPage`, `animateScrollBy`, and `animate*AsState`
+calls that leave their spec on the Compose default. `Motion.tween` and `motionTween` are allowed.
+Reusable animation, such as the shared `AnimatedText` element, belongs in Meta.

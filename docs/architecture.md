@@ -36,7 +36,7 @@ Design-system elements/components and feature components are driven by values an
 ViewModels and navigation are connected at screen entry points. Networking, persistence, and
 synchronization do not belong inside UI components.
 
-Code shared with Mail lives in otus-meta and arrives as pinned libraries; see
+Code shared with Mail lives in otus-meta, which Calendar builds from source; see
 [shared libraries](shared-libraries.md). Code moves there when both apps need it, and new visual
 elements, components, tokens, and symbols start there even when only Calendar uses them. Other
 shared package names do not share code across Git repositories. Accounts, contacts, and settings are

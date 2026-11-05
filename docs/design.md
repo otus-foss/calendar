@@ -1,28 +1,16 @@
 # Color theme
 
-Both apps use the supplied Otus palette in dark mode only. System light/dark settings do not change
-the app theme. `OtusColors` holds named tokens and `OtusTheme` supplies Material colors and default
-content styling; both come from Meta's `com.otus:designsystem` library. Ordinary text inherits
-`text1` (`#EBECED`) at full opacity; muted text requires an explicit `text2` or `text3` choice.
+Calendar draws with `OtusColors` and `OtusTheme` from Meta's `com.otus:designsystem`. It has no
+Theme page yet, so it shows the default theme, Otus with Otus blue, whose palette Meta's
+[mail design foundations](https://github.com/reazndev/otus-meta/blob/main/docs/suite/mail-design.md)
+records. System light/dark settings do not change the app theme. Ordinary text inherits `text1`
+at full opacity; muted text requires an explicit `text2` or `text3` choice. See Meta's
+[decision 0014](https://github.com/reazndev/otus-meta/blob/main/docs/decisions/0014-user-themes.md)
+for the themes the user will pick from.
 
-| Token         | Hex     |
-| ------------- | ------- |
-| accentLight   | #618BB6 |
-| accentRegular | #4D6F92 |
-| accentDark    | #39526B |
-| bgLight       | #3F4041 |
-| bgRegular     | #202021 |
-| bgDark        | #151515 |
-| text1         | #EBECED |
-| text2         | #C2C2C2 |
-| text3         | #8A8A8A |
-| strokeBgDark  | #27292C |
-
-The application background and default Material surface use `bgRegular`. Alternate surfaces and
-borders use their named tokens when explicitly designed. Accent roles use the supplied blues; the
-Material error slot currently reuses `accentLight` because no separate error color was supplied.
 Error UI must communicate meaning through text, not color alone.
 
-Android's starting window mirrors the background/text/accent tokens in XML resources, and system bar
-icons use their light appearance. Keep those native resource values aligned with the common palette.
-The iOS host explicitly requests a dark appearance too.
+Android's starting window uses the default theme's background, text, and accent tokens from
+`androidApp/src/main/res/values/colors.xml`, which Meta's `tools/launch_colors.py` writes; the
+architecture check fails when it drifts. System bar icons use their light appearance. The iOS host
+requests a dark appearance too.

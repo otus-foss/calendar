@@ -23,8 +23,9 @@ Use JDK 21 and Android Studio with the Kotlin Multiplatform plugin. Install Andr
 `ANDROID_HOME` or add `sdk.dir=/your/android/sdk` to untracked `local.properties`. Open this
 directory in Android Studio and run `androidApp`.
 
-The build downloads shared Otus libraries from GitHub Packages, which needs a GitHub token. See
-[Shared libraries](docs/shared-libraries.md) for the one-time setup.
+The build compiles the shared Otus libraries from an otus-meta checkout next to this one,
+`../otus-meta`, or from the checkout the `otus.meta.path` Gradle property names. See
+[Shared libraries](docs/shared-libraries.md).
 
 ```sh
 ./gradlew :androidApp:assembleDebug
@@ -39,8 +40,8 @@ Apple Silicon simulators, iOS 15.3+.
 
 ## Toolchain and attribution
 
-Versions are pinned in `gradle/libs.versions.toml`. The Gradle wrapper includes a distribution
-checksum. Derived from [Kotlin/KMP-App-Template](https://github.com/Kotlin/KMP-App-Template) at
+Versions are pinned in otus-meta's `gradle/libs.versions.toml`, the suite catalog. The Gradle
+wrapper includes a distribution checksum. Derived from [Kotlin/KMP-App-Template](https://github.com/Kotlin/KMP-App-Template) at
 commit `6b6d09e4f3f5e845116422d59b658791ed6149c6`; its Apache 2.0 license is retained in `LICENSE`.
 Sample museum code and unrelated platform targets were removed.
 
@@ -55,8 +56,7 @@ Read [AGENTS.md](AGENTS.md), [architecture](docs/architecture.md), and
 [quality checks](docs/quality.md). UI follows elements → components → screens. Install the tools in the quality guide and
 run `./gradlew checkAll` before submitting changes. Use `./gradlew formatAll` to format.
 
-See [attendee avatars](docs/avatars.md) for how Calendar uses Meta's avatar service and the Public
-Suffix List it bundles.
+See [attendee avatars](docs/avatars.md) for how Calendar will use Meta's avatar service.
 
 ## Commit messages
 
@@ -82,6 +82,7 @@ git config --local core.hooksPath .githooks
 
 The hook rejects invalid title syntax, missing separators, and bodies outside the 1–8 bullet
 limit. Review wording and the title-length target manually. Git-generated merge messages and
-temporary autosquash messages are exempt; final squash messages follow the rules. CI tests the
-checker but does not inspect commit history or install local hooks.
-See [the full commit rules](AGENTS.md#commit-messages) and [hook details](docs/quality.md#commit-message-review).
+temporary autosquash messages are exempt; final squash messages follow the rules. The hook runs
+otus-meta's checker, which otus-meta's CI tests; nothing inspects commit history or installs local
+hooks. See [the full commit rules](AGENTS.md#commit-messages) and
+[hook details](https://github.com/reazndev/otus-meta/blob/main/docs/quality.md#commit-messages).
