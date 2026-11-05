@@ -18,24 +18,8 @@ explicit engine.
 
 ## Public Suffix List
 
-`PublicSuffixDomainResolver` takes an injected suspend loader for the rules, so each app bundles
-the list. Calendar ships `files/public_suffix_list.dat` in its Compose resources, with the MPL 2.0
-notice in `public_suffix_list_MPL-2.0.txt`. No Calendar code reads it yet; the avatar wiring that
-attendee screens need will read it the same way Mail does:
-
-```kotlin
-val domains = PublicSuffixDomainResolver {
-    Res.readBytes("files/public_suffix_list.dat").decodeToString()
-}
-```
-
-The list snapshot is `2026-10-01_23-02-52_UTC`, upstream commit
-`6cd82aff889e3d64e5e03bc5c1f43da1934a960a`, from
-[publicsuffix.org](https://publicsuffix.org/list/public_suffix_list.dat). Source SHA256 is
-`e0fe072d26b0536525badea237953ff451c9f8e64c9d02c6daa81a4491d2fc66`.
-Rules are lowercased and converted label by label to ASCII IDNA while retaining wildcard and
-exception markers. Original comments and the MPL 2.0 notice remain. The bundled files match
-Mail's; refresh both apps' copies together when updating this data.
+The avatar module bundles the list, so the wiring will create `PublicSuffixDomainResolver()` with
+no loader, as Mail does.
 
 ## Validation
 
