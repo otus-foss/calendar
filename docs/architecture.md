@@ -58,17 +58,10 @@ The Android host currently uses the system placeholder icon. Production launcher
 separate design task. Application backup is disabled until account-data backup requirements are
 defined.
 
-## Avatar service
-
-The portable account-scoped avatar resolver comes from the `com.otus:avatar` library. App wiring
-supplies sources; presentation resolves photos before passing bitmap or initial values to
-design-system elements. Calendar does not wire it yet because attendee screens are not
-implemented. See [avatars](avatars.md) for what Calendar supplies.
-
 ## Shared libraries
 
-The design system (`com.otus.designsystem`), date formatting (`com.otus.dateformat`), avatars
-(`com.otus.avatar`), and the settings pages and state (`com.otus.settings`) come from otus-meta;
-see [shared libraries](shared-libraries.md). All visual elements, components, tokens, and symbols
+The design system (`com.otus.designsystem`) comes from otus-meta; see
+[shared libraries](shared-libraries.md). Other Meta libraries, such as `dateformat`, `settings`,
+and `avatar`, are added when a Calendar screen needs them. All visual elements, components, tokens, and symbols
 live in Meta. A new element or reusable component belongs in Meta even when Calendar is its only
 current consumer. The checker rejects local production design-system code.

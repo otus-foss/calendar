@@ -1,24 +1,13 @@
 # Shared libraries
 
 Code that Calendar and Mail both use lives in
-[otus-meta](https://github.com/reazndev/otus-meta). Calendar uses:
+[otus-meta](https://github.com/reazndev/otus-meta). Calendar uses `com.otus:designsystem`
+(`libs.otus.designsystem`) for `OtusTheme`.
 
-| Library | Version catalog entry |
-| --- | --- |
-| `com.otus:avatar` | `libs.otus.avatar` |
-| `com.otus:dateformat` | `libs.otus.dateformat` |
-| `com.otus:designsystem` | `libs.otus.designsystem` |
-| `com.otus:settings` | `libs.otus.settings` |
-
-`com.otus:avatar` also brings `com.otus:jmap` as an API dependency. These libraries replace
-Calendar's earlier copies of `core/avatar`, `core/dateformat`, the design-system theme and
-elements, and `DateFormatSettingsState`. Calendar keeps its app wiring and screens; see
-[avatars](avatars.md).
-
-`com.otus:settings` holds the shared settings pages, `SettingsScreen` and
-`AppearanceSettingsScreen`, as well as `DateFormatSettingsState`. Calendar uses only the state
-today. A future Calendar Settings route hosts those pages and adds Calendar-only sections through
-the appearance page's `content` slot; see [date formatting](date-formatting.md#settings-state).
+Add another library when a Calendar screen first needs it, not before. Meta's `dateformat` and
+`settings` give a future Settings route the shared date-format choice and the `SettingsScreen` and
+`AppearanceSettingsScreen` pages; `avatar` resolves attendee avatars. Do not copy those pages
+into Calendar: their changes belong in Meta.
 
 ## Building against Meta
 

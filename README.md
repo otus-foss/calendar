@@ -47,16 +47,12 @@ Sample museum code and unrelated platform targets were removed.
 
 ## Engineering policy
 
-See [shared libraries](docs/shared-libraries.md) for the otus-meta libraries Calendar uses: the
-design system, date formatting, avatars, and the settings pages and state. See
-[date formatting](docs/date-formatting.md) for how Calendar wires saved format choices into future
-settings and screens.
+See [shared libraries](docs/shared-libraries.md) for the otus-meta libraries Calendar uses, so
+far only the design system.
 
 Read [AGENTS.md](AGENTS.md), [architecture](docs/architecture.md), and
 [quality checks](docs/quality.md). UI follows elements → components → screens. Install the tools in the quality guide and
 run `./gradlew checkAll` before submitting changes. Use `./gradlew formatAll` to format.
-
-See [attendee avatars](docs/avatars.md) for how Calendar will use Meta's avatar service.
 
 ## Commit messages
 
