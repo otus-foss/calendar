@@ -9,23 +9,30 @@ androidApp/                         Android lifecycle and entry point
 iosApp/                             Swift host and Xcode project
 shared/src/
   commonMain/kotlin/<package>/
-    app/                            App.kt, wiring, navigation
-    core/                           Protocol/storage/platform contracts and infrastructure
+    app/                            Construction and routing only
+    core/                           What several features share
+      <slice>/                      Flat contracts, or domain/data/presentation like a feature
     feature/<feature>/
       domain/                       Models, contracts, business behavior
       data/                         Repository implementations, local/remote adapters
       presentation/
         components/                 Feature-specific UI pieces
         screens/                    Complete *Screen.kt views
-                                    ViewModels and UI state live in presentation
+                                    State holders and UI state live in presentation
   commonMain/composeResources/      Strings and assets as needed
   androidMain/kotlin/<package>/     Android implementations
   iosMain/kotlin/<package>/         iOS implementations and framework entry point
   commonTest/kotlin/<package>/      Tests mirroring production packages
 ```
 
-Only create directories when they contain real functionality. The welcome screen demonstrates the
-screen boundary; it does not need an artificial component or element wrapper.
+A feature has only the layers it needs. Only create directories when they contain real
+functionality. The welcome screen demonstrates the screen boundary; it does not need an artificial
+component or element wrapper.
+
+Features never import each other. When two features need something, it moves to `core`; when a
+feature shows another's screen, it takes a slot that `app` fills. The checker applies the layer
+rules inside a core slice too. Mail's [architecture](https://github.com/reazndev/otus-mail/blob/main/docs/architecture.md)
+shows the layout with its features and core slices.
 
 Dependency direction: app wiring may assemble every layer; presentation depends on domain; data
 implements domain contracts. Domain depends only on portable contracts and libraries. Core and
