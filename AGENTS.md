@@ -7,10 +7,11 @@ GitHub. See [hosting and CI](docs/hosting.md).
 
 ## Required reading and commands
 
-Read `docs/architecture.md` and `docs/quality.md` before changing code. Install the Python tools as described
-in the quality guide, then run `./gradlew checkAll` before handing work back. Use
-`./gradlew formatAll` for formatting. On macOS also run the
-pinned Swift tools described in the quality guide. Never report an unrun check as passing.
+Read `docs/architecture.md` and `docs/quality.md` before changing code. Calendar builds otus-meta
+from source, so keep a checkout at `../otus-meta` or set `otus.meta.path`; see `docs/shared-libraries.md`.
+Install the Python tools as described in the quality guide, then run `./gradlew checkAll` before
+handing work back. Use `./gradlew formatAll` for formatting. On macOS also run the pinned Swift
+tools described in the quality guide. Never report an unrun check as passing.
 
 ## Platform priority
 
@@ -21,11 +22,13 @@ readiness. Preserve portable Kotlin boundaries and the iOS target; iOS remains a
 
 All UI follows **elements → components → screens**.
 
-- Elements (small branded primitives, such as buttons, fields, and avatars), components
-  (reusable compositions without feature knowledge), and tokens come from otus-meta's
-  `com.otus.designsystem`; Calendar has no local `designsystem` package. Add new elements,
-  reusable components, visual tokens, and symbol resources there, even if only Calendar currently
-  uses them. Calendar keeps feature adapters and screens. See decision 0008 in Meta.
+- Meta's `designsystem/<shared|calendar>/<group>/elements`: small branded controls, fields, and
+  avatars.
+- Meta's `designsystem/<shared|calendar>/<group>/components`: value-driven visual compositions.
+- Shared elements, components, and tokens come from otus-meta's `com.otus.designsystem`; Calendar
+  has no local `designsystem` package. Add new elements, reusable components, visual tokens, and
+  symbol resources there, even if only Calendar currently uses them. Calendar keeps feature
+  adapters and screens. See decision 0008 in Meta.
 - `feature/<name>/presentation/components`: feature-specific compositions.
 - `feature/<name>/presentation/screens`: complete views, named `*Screen.kt`.
 - `app`: root composition, dependency wiring, and navigation only.
@@ -38,31 +41,41 @@ navigation. Keep business behavior out of composables.
 
 ## Feature and dependency boundaries
 
-Use `feature/<name>/{domain,data,presentation}`. Domain owns portable models/contracts and
-meaningful use cases. Data implements domain contracts. Presentation depends on domain, never data
-implementations. App wiring connects the implementations. Features do not import other features
-directly: put a genuinely shared contract in `core` or compose features through app wiring.
+Use `feature/<name>/{domain,data,presentation}`, with only the layers the feature needs. Domain
+owns portable models/contracts and meaningful use cases. Data implements domain contracts.
+Presentation depends on domain, never data implementations. `app` constructs services and routes
+pages; it holds no feature behavior. Features do not import other features directly: what two
+features need moves to `core`, and a feature that shows another's screen takes a slot `app` fills.
+A shared slice of `core` may use the same `domain`/`data`/`presentation` layers, with the same
+rules.
 
-`core` cannot depend on features, design system, or app. Domain cannot depend on Compose, Android,
+`core` cannot depend on features or app. As in a feature, a core slice's `domain` and `data` cannot
+use the design system; its `presentation` draws with it. Domain cannot depend on Compose, Android,
 UIKit, networking clients, databases, presentation, or data implementations. `commonMain` cannot
 import Android/JVM/Apple-only APIs. Platform implementations belong in matching platform source
 sets. No catch-all `utils`, `helpers`, or `manager` packages.
 
 ## Theme
 
-Dark mode is the only supported color mode, regardless of the device setting. Use the supplied Otus
-palette through `OtusColors` and `OtusTheme`; default text is `text1` (`#EBECED`) at full opacity.
-`text2`/`text3` require an explicit semantic choice. Do not add a light-mode branch, dynamic device
-colors, or a theme switch.
+Calendar shows the default theme until it offers the Theme page, where the user will pick the theme
+and accent; the device's light or dark setting does not change it, and there are no dynamic device
+colors. Use colors only through `OtusColors` and
+`OtusTheme`, which follow the picked theme, and read them when drawing; never copy a token into a
+stored value. Default text is `text1` at full opacity. `text2`/`text3` require an explicit semantic
+choice. Check new UI in the Light and Black themes too. See Meta's
+[decision 0014](https://github.com/reazndev/otus-meta/blob/main/docs/decisions/0014-user-themes.md).
 
 ## Motion
 
-Animate only through Meta's design system. Calendar pins Meta 0.7.0, which provides
-`MotionTokens` and animated elements such as `AnimatedText`; Calendar has no animation code of its
-own. Never add a raw duration constant, a `tween` with a literal, a new `CubicBezierEasing`, or an
-animation with a Compose default spec. Meta's `main` replaces `MotionTokens` with `Motion`
-(`motionTween(speed, curve)` and `LocalMotionScale`); adopt it when Calendar pins a release that
-includes it. See [motion](docs/motion.md).
+Animate only through Meta's `Motion`. Use `motionTween(speed, curve)` in composables,
+`Motion.tween(speed, curve, scale)` outside composition, or `Motion.millis(speed, scale)` for a
+spec that is not a tween, and respect `LocalMotionScale` everywhere. Never add a raw duration
+constant, a `tween` with a literal, a new `CubicBezierEasing`, or an animation with a Compose
+default spec. Pick the speed by what moves: `Quick` for touch feedback, `Fast` for small in-place
+changes, `Normal` for panels, sheets, and text, `Relaxed` for large surfaces such as the sidebar or
+a settling row. Pick the curve by direction: `Standard` by default, `Enter` for things arriving,
+`Exit` for things leaving. Change `LocalMotionScale` to speed everything up or down; do not edit
+the speeds. See [motion](docs/motion.md).
 
 ## Opinionated conventions
 
@@ -81,9 +94,15 @@ chain. Change immutable values with `copy`. Keep a loop or a local `var` when ea
 or cycle tracking would make a chain harder to follow. Do not add Java-style setters that return
 `this`, chain side effects through `let` or `also`, or change a public API only for style.
 
+Keep a call chain as one expression, with one call per line, instead of splitting it into temporary
+`val`s that are each read once. Use a builder or chainable API wherever the library offers one and
+it fits, such as `SharedPreferences.Editor`, Ktor request builders, and `buildJsonObject`. Name an
+intermediate value only when the code reads it more than once or the name says something the chain
+cannot.
+
 Keep colors and all visual tokens in Meta's `designsystem/theme` and refer to named tokens.
-Feature UI belongs with its feature; reusable rendering belongs in Meta. Create folders with real
-code rather than placeholder files. Keep handwritten Kotlin files at most 300 lines and Swift files at most 200 lines, including tests,
+Feature UI belongs with its feature; reusable rendering belongs in Meta. Create folders with real code rather than placeholder files. Keep
+handwritten Kotlin files at most 300 lines and Swift files at most 200 lines, including tests,
 comments, and blank lines. Aim for 100–200 lines for typical UI files. Split by responsibility
 first. The only permitted file-size exception is a first-line
 `// otus-file-length: 420 -- <concrete reason>` directive; see `docs/quality.md` for validation
@@ -91,8 +110,54 @@ rules. It changes only the size limit, never other checks.
 
 Do not add blanket suppressions, formatter-off markers, lint baselines, skipped checks, or
 failure-tolerant CI to make a change pass. Fix violations. A rule change needs an explicit rationale
-in `docs/decisions/` and a corresponding check/test update; do not silently weaken policy. Tool
-versions must be pinned.
+in Meta's `docs/decisions/` and a corresponding update of Meta's checks and tests; do not silently
+weaken policy. Tool versions must be pinned, in Meta's version catalog.
+
+## Readable code
+
+Write for the person who reads the code next. A file passing ktlint does not make it readable:
+ktlint adds braces and line breaks, but it never takes them out again once the code gets shorter.
+After formatting, read the diff and fix shapes like these.
+
+- Give every `when` entry one line. ktlint_official braces every entry once one entry needs
+  several lines, and it leaves the braces after that entry shrinks. Remove leftover braces, or move
+  a long entry's body into a named function so all entries fit on one line.
+
+  ```kotlin
+  // Avoid
+  when {
+      created < 0 -> {
+          null
+      }
+
+      kind == MISS_RECORD && bytes.isEmpty() -> {
+          StoredAvatar(null, created)
+      }
+  }
+
+  // Prefer
+  when {
+      created < 0 -> null
+      kind == MISS_RECORD && bytes.isEmpty() -> StoredAvatar(null, created)
+  }
+  ```
+
+- Keep nesting to two or three levels. Return early with `?: return` instead of wrapping a body in
+  `if (x != null) { ... }` or `?.let { ... }`, and give a lambda nested several levels deep its
+  own named function or composable, such as `decodedRecord(...)` or `StarButton(star)`.
+- Join a call that fits in 120 columns back onto one line. When it does not fit, name a part of it
+  first, such as `val fitted = ...` or `val header = ...`, rather than splitting
+  `foo(\n    x,\n)?.let { ... }` over several lines.
+- Write `Modifier.then(if (x) Modifier else Modifier.a().b())` as a named private extension, such
+  as `Modifier.updateButton(...)` or `Modifier.progressRing(...)`.
+- Name arguments that are bare literals: `ChipFrame(selected = null, enabled = true)`, not
+  `ChipFrame(null, true)`.
+- Never hide a side effect in `(...).also { if (it) save() }` or `x?.let { destroy(it) }`. Write a
+  plain `if`.
+- Rewrap KDoc so each paragraph reads as prose. Do not leave a sentence broken after a long link.
+- Name values by what they hold. Do not shadow a parameter or a standard function such as `run`.
+
+Do not churn code to meet these rules. Fix the shapes in code you touch.
 
 ## Commit messages
 
@@ -137,7 +202,7 @@ feat(inbox): add avatars
 ```
 
 Enable the versioned Git hooks once per checkout, including new clones. `pre-commit` checks
-formatting, and `commit-msg` checks the message and removes AI attribution lines. No hook runs
+formatting, and `commit-msg` checks the message with Meta's checker. No hook runs
 `checkAll`, and CI checks only pull requests, so run `./gradlew checkAll` yourself before a push
 that needs it, such as a direct push to `main`.
 
@@ -149,8 +214,8 @@ Run the command from this repository's root. The `commit-msg` hook needs Python 
 title syntax, missing separators, and bodies outside the 1–8 bullet limit. Review wording,
 imperative verbs, breaking-change explanations, and the
 72-character target manually. Git-generated merge messages and temporary autosquash messages are
-exempt; the final squash message must follow the rules. CI tests the checker but does not inspect
-commit history. See [the decision](docs/decisions/0004-commit-messages.md).
+exempt; the final squash message must follow the rules. Meta's CI tests the checker; nothing
+inspects commit history. See [the decision](https://github.com/reazndev/otus-meta/blob/main/docs/decisions/0004-commit-messages.md).
 
 ## Pull requests
 
@@ -182,8 +247,9 @@ environment blockers precisely. Add behavior tests for new logic and regression 
 not add tests that merely repeat constants or implementation details. Update architecture docs when
 boundaries change.
 
-Each app is a separate Git repository. Never assume a sibling checkout or parent docs are available
-in CI. Code shared with Mail lives in otus-meta and arrives here as a pinned release; see
-`docs/shared-libraries.md`. Change shared code there, release it, then update the pinned version
-here. Check JMAP specifications and advertised server capabilities before implementing protocol
-behavior.
+Each app is a separate Git repository. Never assume the unversioned parent docs are available.
+Code shared with Mail lives in otus-meta, which Calendar builds from source; CI checks it out beside
+Calendar. Change shared code there on a branch with the same name as Calendar's, and merge Meta's pull
+request first; see `docs/shared-libraries.md`. Suite docs, decisions, and review prompts live only
+in otus-meta. Check JMAP specifications and advertised server capabilities before implementing
+protocol behavior.
