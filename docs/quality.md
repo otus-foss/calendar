@@ -16,19 +16,20 @@ python3 -m venv .venv
 git config --local core.hooksPath .githooks
 ```
 
-During development, batch edits and run the linters plus the test classes affected by the change:
+During development, batch edits and run the linters:
 
 ```sh
 ./gradlew spotlessCheck detekt ruffCheck ruffFormatCheck
-./gradlew :shared:testAndroidHostTest --tests 'com.otus.calendar.SomeTest'
 ```
 
 | Command | Scope |
 | --- | --- |
 | `checkTooling` | `qualityCheck` |
 | `checkAndroidBuild` | Android lint and debug assembly |
-| `checkTests` | Shared's host tests and the app's unit tests |
-| `checkAll` | all three |
+| `checkAll` | both |
+
+Calendar has no tests yet, so it has no `checkTests` part and no coverage workflow. The first test
+brings back the `checkTests` task, its two CI shards, and `coverage.yml` as Mail has them.
 
 Calendar has no Python tools of its own, so it has no `architectureTest`, and Ruff finds no files
 to check until it gets some.
@@ -53,16 +54,7 @@ Shared Kotlin iOS source compilation can also run on Linux with
 
 ## CI
 
-The `quality` workflow's `check` job runs `checkAll` as four parallel jobs: `checkTooling`,
-`checkAndroidBuild`, and `checkTests` in two shards that split the test classes by name. The `ios`
+The `quality` workflow's `check` job runs `checkAll` as two parallel jobs: `checkTooling` and
+`checkAndroidBuild`. The `ios`
 job runs Swift formatting and lint plus a simulator build on macOS 15 with Xcode 26.3. See
 [hosting and CI](hosting.md).
-
-## Coverage
-
-```sh
-./gradlew koverXmlReportCoverage koverHtmlReportCoverage
-python3 ../otus-meta/tools/coverage_report.py build/reports/kover/reportCoverage.xml --base origin/main
-```
-
-The `coverage` variant runs Shared's host tests and the app's debug unit tests once each.

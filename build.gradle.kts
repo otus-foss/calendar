@@ -13,13 +13,8 @@ tasks.register("checkAndroidBuild") {
     dependsOn(":androidApp:lintDebug", ":androidApp:assembleDebug")
 }
 
-tasks.register("checkTests") {
-    group = "verification"
-    dependsOn(":androidApp:testDebugUnitTest", ":shared:testAndroidHostTest")
-}
-
 tasks.register("checkAll") {
     group = "verification"
     description = "Run portable quality checks, Android lint, and debug compilation."
-    dependsOn("checkTooling", "checkAndroidBuild", "checkTests")
+    dependsOn("checkTooling", "checkAndroidBuild")
 }

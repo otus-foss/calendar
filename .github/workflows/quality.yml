@@ -48,8 +48,7 @@ jobs:
         if: steps.gate.outputs.ready == 'true'
         uses: ./otus-meta/.github/actions/quality-changes
 
-  # Each job runs one part of checkAll, so the parts run at the same time. The tests run in two
-  # shards; each test class runs in exactly one of them.
+  # Each job runs one part of checkAll, so the parts run at the same time.
   check:
     needs: changes
     if: needs.changes.outputs.build == 'true'
@@ -63,10 +62,6 @@ jobs:
             tasks: checkTooling
           - part: android build
             tasks: checkAndroidBuild
-          - part: tests 1 of 2
-            tasks: checkTests -Potus.testShard=1/2
-          - part: tests 2 of 2
-            tasks: checkTests -Potus.testShard=2/2
     # Calendar and otus-meta sit side by side, as on a development machine, so Gradle finds Meta at
     # ../otus-meta and Spotless never sees Meta's files.
     defaults:

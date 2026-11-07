@@ -5,9 +5,6 @@ plugins {
 dependencies {
     implementation(projects.shared)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.compose.foundation)
-    testImplementation(libs.robolectric)
-    testImplementation(libs.kotlinx.datetime)
 }
 
 android {
