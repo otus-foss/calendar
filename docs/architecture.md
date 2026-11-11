@@ -31,7 +31,7 @@ component or element wrapper.
 
 Features never import each other. When two features need something, it moves to `core`; when a
 feature shows another's screen, it takes a slot that `app` fills. The checker applies the layer
-rules inside a core slice too. Mail's [architecture](https://github.com/reazndev/otus-mail/blob/main/docs/architecture.md)
+rules inside a core slice too. Mail's [architecture](https://github.com/otus-foss/otus-mail/blob/main/docs/architecture.md)
 shows the layout with its features and core slices.
 
 Dependency direction: app wiring may assemble every layer; presentation depends on domain; data

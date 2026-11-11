@@ -1,7 +1,7 @@
 # Shared libraries
 
 Code that Calendar and Mail both use lives in
-[otus-meta](https://github.com/reazndev/otus-meta). Calendar uses `com.otusfoss.core:designsystem`
+[otus-meta](https://github.com/otus-foss/otus-meta). Calendar uses `com.otusfoss.core:designsystem`
 (`libs.otus.designsystem`) for `OtusTheme`.
 
 Add another library when a Calendar screen first needs it, not before. Meta's `dateformat` and
@@ -17,7 +17,7 @@ Calendar builds otus-meta from source: the checkout next to it, `../otus-meta`, 
 project of that checkout, and the build also takes Meta's convention plugins, its version catalog
 as `libs`, its tools, and its detekt configuration from it. Nothing is downloaded from GitHub
 Packages and no Meta version is pinned. See
-[otus-meta's consuming guide](https://github.com/reazndev/otus-meta/blob/main/docs/consuming.md).
+[otus-meta's consuming guide](https://github.com/otus-foss/otus-meta/blob/main/docs/consuming.md).
 
 Calendar uses no library that the other repositories do not, so it has no catalog of its own.
 

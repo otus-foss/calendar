@@ -2,10 +2,10 @@
 
 Calendar draws with `OtusColors` and `OtusTheme` from Meta's `com.otusfoss.core:designsystem`. It has no
 Theme page yet, so it shows the default theme, Otus with Otus blue, whose palette Meta's
-[mail design foundations](https://github.com/reazndev/otus-meta/blob/main/docs/suite/mail-design.md)
+[mail design foundations](https://github.com/otus-foss/otus-meta/blob/main/docs/suite/mail-design.md)
 records. System light/dark settings do not change the app theme. Ordinary text inherits `text1`
 at full opacity; muted text requires an explicit `text2` or `text3` choice. See Meta's
-[decision 0014](https://github.com/reazndev/otus-meta/blob/main/docs/decisions/0014-user-themes.md)
+[decision 0014](https://github.com/otus-foss/otus-meta/blob/main/docs/decisions/0014-user-themes.md)
 for the themes the user will pick from.
 
 Error UI must communicate meaning through text, not color alone.
