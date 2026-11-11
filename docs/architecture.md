@@ -43,7 +43,7 @@ Design-system elements/components and feature components are driven by values an
 ViewModels and navigation are connected at screen entry points. Networking, persistence, and
 synchronization do not belong inside UI components.
 
-Code shared with Mail lives in otus-meta, which Calendar builds from source; see
+Code shared with Mail lives in otus-core, which Calendar builds from source; see
 [shared libraries](shared-libraries.md). Code moves there when both apps need it, and new visual
 elements, components, tokens, and symbols start there even when only Calendar uses them. Other
 shared package names do not share code across Git repositories. Accounts, contacts, and settings are
@@ -60,8 +60,8 @@ defined.
 
 ## Shared libraries
 
-The design system (`com.otusfoss.core.designsystem`) comes from otus-meta; see
-[shared libraries](shared-libraries.md). Other Meta libraries, such as `dateformat`, `settings`,
+The design system (`com.otusfoss.core.designsystem`) comes from otus-core; see
+[shared libraries](shared-libraries.md). Other Core libraries, such as `dateformat`, `settings`,
 and `avatar`, are added when a Calendar screen needs them. All visual elements, components, tokens, and symbols
-live in Meta. A new element or reusable component belongs in Meta even when Calendar is its only
+live in Core. A new element or reusable component belongs in Core even when Calendar is its only
 current consumer. The checker rejects local production design-system code.

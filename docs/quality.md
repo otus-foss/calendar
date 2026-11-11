@@ -1,14 +1,14 @@
 # Quality gate
 
-Meta's [quality guide](https://github.com/otus-foss/otus-meta/blob/main/docs/quality.md) describes the commands, the convention plugins, the
+Core's [quality guide](https://github.com/otus-foss/otus-core/blob/main/docs/quality.md) describes the commands, the convention plugins, the
 shared tools and rules, file-length exceptions, commit messages, and coverage for every Otus
-repository. Calendar runs them from its otus-meta checkout; see
+repository. Calendar runs them from its otus-core checkout; see
 [shared libraries](shared-libraries.md). This guide covers what only Calendar adds.
 
 ## Commands
 
-Requires JDK 21, Python 3.11+, the Android SDK, and an otus-meta checkout at `../otus-meta` or at
-`otus.meta.path`. One-time setup:
+Requires JDK 21, Python 3.11+, the Android SDK, and an otus-core checkout at `../otus-core` or at
+`otus.core.path`. One-time setup:
 
 ```sh
 python3 -m venv .venv
@@ -47,7 +47,7 @@ mint run swiftlint lint --strict
 ```
 
 SwiftFormat uses `--commas inline` to match SwiftLint's trailing-comma rule. SwiftLint's
-`file_length` rule is off, because Meta's architecture check enforces the Swift limit.
+`file_length` rule is off, because Core's architecture check enforces the Swift limit.
 
 Shared Kotlin iOS source compilation can also run on Linux with
 `./gradlew :shared:compileKotlinIosSimulatorArm64 :shared:compileKotlinIosArm64`.

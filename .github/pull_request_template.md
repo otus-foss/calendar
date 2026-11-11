@@ -16,7 +16,7 @@ One bullet per change, in the words a user would use. Name code only where a rev
 
 ## Depends on
 
-<!-- The paired Meta PR as otus-foss/otus-meta#123, the Meta release to pin, or the design page. -->
+<!-- The paired Core PR as otus-foss/otus-core#123, the Core release to pin, or the design page. -->
 
 -
 
