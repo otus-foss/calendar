@@ -42,7 +42,7 @@ Apple Silicon simulators, iOS 15.3+.
 
 Versions are pinned in otus-meta's `gradle/libs.versions.toml`, the suite catalog. The Gradle
 wrapper includes a distribution checksum. Derived from [Kotlin/KMP-App-Template](https://github.com/Kotlin/KMP-App-Template) at
-commit `6b6d09e4f3f5e845116422d59b658791ed6149c6`; its Apache 2.0 license is retained in `LICENSE`.
+commit `6b6d09e4f3f5e845116422d59b658791ed6149c6`; its Apache 2.0 license is retained in `LICENSES/Apache-2.0-KMP-App-Template.txt`.
 Sample museum code and unrelated platform targets were removed.
 
 ## Engineering policy
@@ -82,3 +82,8 @@ temporary autosquash messages are exempt; final squash messages follow the rules
 otus-meta's checker, which otus-meta's CI tests; nothing inspects commit history or installs local
 hooks. See [the full commit rules](AGENTS.md#commit-messages) and
 [hook details](https://github.com/reazndev/otus-meta/blob/main/docs/quality.md#commit-messages).
+
+## License
+
+GPL-3.0-or-later, with an [additional permission](LICENSE-EXCEPTION.md) that allows app-store
+distribution while the source stays public. See [LICENSE](LICENSE).
