@@ -1,11 +1,11 @@
-package com.otus.calendar
+package com.otusfoss.calendar
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.WindowCompat
-import com.otus.calendar.app.App
+import com.otusfoss.calendar.app.App
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

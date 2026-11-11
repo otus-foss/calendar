@@ -1,7 +1,7 @@
 # Architecture
 
-Both Otus repositories use the same conventions. Their package roots are `com.otus.mail` and
-`com.otus.calendar`.
+Both Otus repositories use the same conventions. Their package roots are `com.otusfoss.mail` and
+`com.otusfoss.calendar`.
 
 ```text
 androidApp/                         Android lifecycle and entry point
@@ -60,7 +60,7 @@ defined.
 
 ## Shared libraries
 
-The design system (`com.otus.designsystem`) comes from otus-meta; see
+The design system (`com.otusfoss.core.designsystem`) comes from otus-meta; see
 [shared libraries](shared-libraries.md). Other Meta libraries, such as `dateformat`, `settings`,
 and `avatar`, are added when a Calendar screen needs them. All visual elements, components, tokens, and symbols
 live in Meta. A new element or reusable component belongs in Meta even when Calendar is its only

@@ -25,7 +25,7 @@ All UI follows **elements → components → screens**.
 - Meta's `designsystem/<shared|calendar>/<group>/elements`: small branded controls, fields, and
   avatars.
 - Meta's `designsystem/<shared|calendar>/<group>/components`: value-driven visual compositions.
-- Shared elements, components, and tokens come from otus-meta's `com.otus.designsystem`; Calendar
+- Shared elements, components, and tokens come from otus-meta's `com.otusfoss.core.designsystem`; Calendar
   has no local `designsystem` package. Add new elements, reusable components, visual tokens, and
   symbol resources there, even if only Calendar currently uses them. Calendar keeps feature
   adapters and screens. See decision 0008 in Meta.
@@ -241,7 +241,7 @@ request. See [landing](https://github.com/reazndev/otus-meta/blob/main/docs/land
 
 During development, prefer `./gradlew spotlessCheck detekt ruffCheck ruffFormatCheck` and run
 only tests relevant to the change, for example
-`./gradlew :shared:testAndroidHostTest --tests 'com.otus.calendar.SomeTest'` with the actual test
+`./gradlew :shared:testAndroidHostTest --tests 'com.otusfoss.calendar.SomeTest'` with the actual test
 class name. Use `qualityCheck` when all quality checks are needed. Batch edits and run `checkAll`
 once at the end, rather than after each edit. Run it again only if later changes or failures
 require it.

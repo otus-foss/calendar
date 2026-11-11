@@ -1,6 +1,6 @@
-package com.otus.calendar
+package com.otusfoss.calendar
 
 import androidx.compose.ui.window.ComposeUIViewController
-import com.otus.calendar.app.App
+import com.otusfoss.calendar.app.App
 
 fun mainViewController() = ComposeUIViewController { App() }
