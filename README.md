@@ -1,7 +1,7 @@
 # Otus Calendar
 
 Development, pull requests, and issues use
-[otus-calendar on GitHub](https://github.com/otus-foss/otus-calendar). See [hosting and CI](docs/hosting.md).
+[calendar on GitHub](https://github.com/otus-foss/calendar). See [hosting and CI](docs/hosting.md).
 
 Kotlin Multiplatform + Compose app for Android and iOS, intended as the calendar client in the Otus
 JMAP suite. This initial scaffold includes a welcome screen; JMAP discovery, authentication,
@@ -23,8 +23,8 @@ Use JDK 21 and Android Studio with the Kotlin Multiplatform plugin. Install Andr
 `ANDROID_HOME` or add `sdk.dir=/your/android/sdk` to untracked `local.properties`. Open this
 directory in Android Studio and run `androidApp`.
 
-The build compiles the shared Otus libraries from an otus-meta checkout next to this one,
-`../otus-meta`, or from the checkout the `otus.meta.path` Gradle property names. See
+The build compiles the shared Otus libraries from an core checkout next to this one,
+`../core`, or from the checkout the `otus.core.path` Gradle property names. See
 [Shared libraries](docs/shared-libraries.md).
 
 ```sh
@@ -40,14 +40,14 @@ Apple Silicon simulators, iOS 15.3+.
 
 ## Toolchain and attribution
 
-Versions are pinned in otus-meta's `gradle/libs.versions.toml`, the suite catalog. The Gradle
+Versions are pinned in core's `gradle/libs.versions.toml`, the suite catalog. The Gradle
 wrapper includes a distribution checksum. Derived from [Kotlin/KMP-App-Template](https://github.com/Kotlin/KMP-App-Template) at
 commit `6b6d09e4f3f5e845116422d59b658791ed6149c6`; its Apache 2.0 license is retained in `LICENSES/Apache-2.0-KMP-App-Template.txt`.
 Sample museum code and unrelated platform targets were removed.
 
 ## Engineering policy
 
-See [shared libraries](docs/shared-libraries.md) for the otus-meta libraries Calendar uses, so
+See [shared libraries](docs/shared-libraries.md) for the core libraries Calendar uses, so
 far only the design system.
 
 Read [AGENTS.md](AGENTS.md), [architecture](docs/architecture.md), and
@@ -79,6 +79,6 @@ git config --local core.hooksPath .githooks
 The hook rejects invalid title syntax, missing separators, and bodies outside the 1–8 bullet
 limit. Review wording and the title-length target manually. Git-generated merge messages and
 temporary autosquash messages are exempt; final squash messages follow the rules. The hook runs
-otus-meta's checker, which otus-meta's CI tests; nothing inspects commit history or installs local
+core's checker, which core's CI tests; nothing inspects commit history or installs local
 hooks. See [the full commit rules](AGENTS.md#commit-messages) and
-[hook details](https://github.com/otus-foss/otus-meta/blob/main/docs/quality.md#commit-messages).
+[hook details](https://github.com/otus-foss/core/blob/main/docs/quality.md#commit-messages).
