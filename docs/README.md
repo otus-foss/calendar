@@ -13,7 +13,8 @@ synchronization and product features are not implemented yet.
 - `androidApp`: Android application entry point.
 - `iosApp`: Xcode project hosting the shared Compose UI.
 
-Application and bundle ID: `com.otusfoss.calendar` (verify ownership before publishing).
+Application and bundle ID: `com.otusfoss.calendar` (verify ownership before publishing). On Android,
+debug builds add `.dev`, so they install beside the stable app.
 
 ## Android
 
