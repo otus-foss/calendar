@@ -1,4 +1,19 @@
-# Otus Calendar
+![Otus Calendar](.github/banner.png)
+
+Otus Calendar will be the calendar app of the Otus suite for Android and iOS, using JMAP for
+Calendars on the server you choose. It shares its design system and JMAP client with
+[Otus Mail](https://github.com/otus-foss/mail) through [Otus Core](https://github.com/otus-foss/core).
+
+> [!WARNING]
+> Otus Calendar is still in development. Expect bugs, missing features, and changes that break your
+> settings between builds.
+
+## Install
+
+There are no builds yet. To try the current scaffold, build it from source as described under
+[Android](#android) or [iOS](#ios).
+
+## Development
 
 Development, pull requests, and issues use
 [calendar on GitHub](https://github.com/otus-foss/calendar). See [hosting and CI](docs/hosting.md).
@@ -7,7 +22,7 @@ Kotlin Multiplatform + Compose app for Android and iOS, intended as the calendar
 JMAP suite. This initial scaffold includes a welcome screen; JMAP discovery, authentication,
 synchronization and product features are not implemented yet.
 
-## Structure
+### Structure
 
 - `shared`: common Kotlin code and Compose UI, with platform integrations.
 - `androidApp`: Android application entry point.
@@ -15,7 +30,7 @@ synchronization and product features are not implemented yet.
 
 Application and bundle ID: `com.otusfoss.calendar` (verify ownership before publishing).
 
-## Android
+### Android
 
 Android is the primary platform; iOS remains a secondary target.
 
@@ -31,21 +46,21 @@ The build compiles the shared Otus libraries from an core checkout next to this 
 ./gradlew :androidApp:assembleDebug
 ```
 
-## iOS
+### iOS
 
 On macOS, install Xcode and JDK 21. Open `iosApp/iosApp.xcodeproj`, select an iPhone simulator and
 run. For a physical device, set `TEAM_ID` in `iosApp/Configuration/Config.xcconfig` and configure
 signing. Xcode builds the shared Kotlin framework automatically. Targets: iOS ARM64 devices and
 Apple Silicon simulators, iOS 15.3+.
 
-## Toolchain and attribution
+### Toolchain and attribution
 
 Versions are pinned in core's `gradle/libs.versions.toml`, the suite catalog. The Gradle
 wrapper includes a distribution checksum. Derived from [Kotlin/KMP-App-Template](https://github.com/Kotlin/KMP-App-Template) at
 commit `6b6d09e4f3f5e845116422d59b658791ed6149c6`; its Apache 2.0 license is retained in `LICENSES/Apache-2.0-KMP-App-Template.txt`.
 Sample museum code and unrelated platform targets were removed.
 
-## Engineering policy
+### Engineering policy
 
 See [shared libraries](docs/shared-libraries.md) for the core libraries Calendar uses, so
 far only the design system.
@@ -54,7 +69,7 @@ Read [AGENTS.md](AGENTS.md), [architecture](docs/architecture.md), and
 [quality checks](docs/quality.md). UI follows elements → components → screens. Install the tools in the quality guide and
 run `./gradlew checkAll` before submitting changes. Use `./gradlew formatAll` to format.
 
-## Commit messages
+### Commit messages
 
 Use `type(scope): short action`, a blank line, and 1–8 bullets explaining the changes:
 
