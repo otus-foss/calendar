@@ -1,7 +1,7 @@
 # Otus Calendar
 
 Development, pull requests, and issues use
-[otus-calendar on GitHub](https://github.com/reazndev/otus-calendar). See [hosting and CI](docs/hosting.md).
+[otus-calendar on GitHub](https://github.com/otus-foss/otus-calendar). See [hosting and CI](docs/hosting.md).
 
 Kotlin Multiplatform + Compose app for Android and iOS, intended as the calendar client in the Otus
 JMAP suite. This initial scaffold includes a welcome screen; JMAP discovery, authentication,
@@ -81,9 +81,4 @@ limit. Review wording and the title-length target manually. Git-generated merge 
 temporary autosquash messages are exempt; final squash messages follow the rules. The hook runs
 otus-meta's checker, which otus-meta's CI tests; nothing inspects commit history or installs local
 hooks. See [the full commit rules](AGENTS.md#commit-messages) and
-[hook details](https://github.com/reazndev/otus-meta/blob/main/docs/quality.md#commit-messages).
-
-## License
-
-GPL-3.0-or-later, with an [additional permission](LICENSE-EXCEPTION.md) that allows app-store
-distribution while the source stays public. See [LICENSE](LICENSE).
+[hook details](https://github.com/otus-foss/otus-meta/blob/main/docs/quality.md#commit-messages).
