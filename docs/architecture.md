@@ -31,7 +31,7 @@ component or element wrapper.
 
 Features never import each other. When two features need something, it moves to `core`; when a
 feature shows another's screen, it takes a slot that `app` fills. The checker applies the layer
-rules inside a core slice too. Mail's [architecture](https://github.com/otus-foss/otus-mail/blob/main/docs/architecture.md)
+rules inside a core slice too. Mail's [architecture](https://github.com/otus-foss/mail/blob/main/docs/architecture.md)
 shows the layout with its features and core slices.
 
 Dependency direction: app wiring may assemble every layer; presentation depends on domain; data
@@ -43,7 +43,7 @@ Design-system elements/components and feature components are driven by values an
 ViewModels and navigation are connected at screen entry points. Networking, persistence, and
 synchronization do not belong inside UI components.
 
-Code shared with Mail lives in otus-core, which Calendar builds from source; see
+Code shared with Mail lives in core, which Calendar builds from source; see
 [shared libraries](shared-libraries.md). Code moves there when both apps need it, and new visual
 elements, components, tokens, and symbols start there even when only Calendar uses them. Other
 shared package names do not share code across Git repositories. Accounts, contacts, and settings are
@@ -60,7 +60,7 @@ defined.
 
 ## Shared libraries
 
-The design system (`com.otusfoss.core.designsystem`) comes from otus-core; see
+The design system (`com.otusfoss.core.designsystem`) comes from core; see
 [shared libraries](shared-libraries.md). Other Core libraries, such as `dateformat`, `settings`,
 and `avatar`, are added when a Calendar screen needs them. All visual elements, components, tokens, and symbols
 live in Core. A new element or reusable component belongs in Core even when Calendar is its only

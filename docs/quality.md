@@ -1,13 +1,13 @@
 # Quality gate
 
-Core's [quality guide](https://github.com/otus-foss/otus-core/blob/main/docs/quality.md) describes the commands, the convention plugins, the
+Core's [quality guide](https://github.com/otus-foss/core/blob/main/docs/quality.md) describes the commands, the convention plugins, the
 shared tools and rules, file-length exceptions, commit messages, and coverage for every Otus
-repository. Calendar runs them from its otus-core checkout; see
+repository. Calendar runs them from its core checkout; see
 [shared libraries](shared-libraries.md). This guide covers what only Calendar adds.
 
 ## Commands
 
-Requires JDK 21, Python 3.11+, the Android SDK, and an otus-core checkout at `../otus-core` or at
+Requires JDK 21, Python 3.11+, the Android SDK, and an core checkout at `../core` or at
 `otus.core.path`. One-time setup:
 
 ```sh
