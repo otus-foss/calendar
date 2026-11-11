@@ -1,6 +1,6 @@
 # Color theme
 
-Calendar draws with `OtusColors` and `OtusTheme` from Meta's `com.otus:designsystem`. It has no
+Calendar draws with `OtusColors` and `OtusTheme` from Meta's `com.otusfoss.core:designsystem`. It has no
 Theme page yet, so it shows the default theme, Otus with Otus blue, whose palette Meta's
 [mail design foundations](https://github.com/reazndev/otus-meta/blob/main/docs/suite/mail-design.md)
 records. System light/dark settings do not change the app theme. Ordinary text inherits `text1`

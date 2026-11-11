@@ -1,7 +1,7 @@
 # Shared libraries
 
 Code that Calendar and Mail both use lives in
-[otus-meta](https://github.com/reazndev/otus-meta). Calendar uses `com.otus:designsystem`
+[otus-meta](https://github.com/reazndev/otus-meta). Calendar uses `com.otusfoss.core:designsystem`
 (`libs.otus.designsystem`) for `OtusTheme`.
 
 Add another library when a Calendar screen first needs it, not before. Meta's `dateformat` and
@@ -13,7 +13,7 @@ into Calendar: their changes belong in Meta.
 
 Calendar builds otus-meta from source: the checkout next to it, `../otus-meta`, or the one the
 `otus.meta.path` Gradle property names, for example in `~/.gradle/gradle.properties` or with
-`-Potus.meta.path=../meta-worktree`. Gradle replaces each `com.otus:<module>` with the matching
+`-Potus.meta.path=../meta-worktree`. Gradle replaces each `com.otusfoss.core:<module>` with the matching
 project of that checkout, and the build also takes Meta's convention plugins, its version catalog
 as `libs`, its tools, and its detekt configuration from it. Nothing is downloaded from GitHub
 Packages and no Meta version is pinned. See
