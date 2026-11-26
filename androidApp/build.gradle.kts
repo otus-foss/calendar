@@ -16,5 +16,9 @@ android {
         getByName("release") {
             isMinifyEnabled = false
         }
+        // Its own app id, so a debug build installs beside the stable app.
+        getByName("debug") {
+            applicationIdSuffix = ".dev"
+        }
     }
 }
